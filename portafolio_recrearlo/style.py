@@ -15,9 +15,12 @@ s_app = dict(bg="#090909")
 
 # btn descarga cv
 s_btn_cv = dict(
-  marginRight="auto",
   bg="#0d6efd",
-  color="white"
+  color="white",
+  **{"_hover":{
+    "bg":"white",
+    "color":"black"
+  }}
 )
 
 # contenedor base
