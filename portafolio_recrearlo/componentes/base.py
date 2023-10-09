@@ -10,5 +10,5 @@ def Base(content):
       content,
       Footer(),
       style=style.s_base
-    )
+    ),
   )

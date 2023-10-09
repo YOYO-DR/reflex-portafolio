@@ -17,9 +17,9 @@ s_app = dict(bg="#090909")
 s_btn_cv = dict(
   bg="#0d6efd",
   color="white",
-  **{"_hover":{
-    "bg":"white",
-    "color":"black"
+  **{"_hover": {
+    "bg": "white",
+    "color": "black"
   }}
 )
 
@@ -28,9 +28,8 @@ s_base = dict(
   bg="black",
   color="white",
   width="1200px",
-  padding="20px"
+  padding="0 20px"
 )
-
 
 # inicio de navbar
 s_nav_item_inicio = dict(
@@ -55,7 +54,21 @@ s_nav_item_notas = dict(
 # imagen de inicio
 s_img_border = dict(
   border="1px solid white",
-  borderRadius="0.375rem"
+  borderRadius="0.5rem",
+  boxShadow="0px 0px 10px 5px rgba(255,255,255,0.7)",
+  margin="15px",
+  opacity="0.8"
+)
+
+# navbar
+s_navbar = dict(
+  bg="black",
+  **def_s_width(100),
+  borderBottom="0.5px solid white",
+  position="sticky",
+  top="0",
+  padding="5px 15px",
+  zIndex="5"
 )
 
 # texto del footer

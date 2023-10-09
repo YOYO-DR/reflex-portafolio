@@ -1,0 +1,44 @@
+-- texto exacto de la consulta
+
+PREGUNTA MIA: Como puedo desplegar un back que esta en un contenedor y que abre el puerto 8000, en una app service de azure, como es un framework nuevo, no hay informacion de azure para desplegarlo, pero ese backend se puede meter perfectamente en un contenedor
+
+RESPUESTA:
+- Para desplegar un backend en un contenedor que abre el puerto 8000 en una App Service de Azure, puedes seguir los siguientes pasos. Estos pasos asumen que ya tienes una cuenta de Azure y tienes instalado Azure CLI en tu máquina local.
+
+1. Inicia sesión en Azure
+  - Primero, necesitas iniciar sesión en tu cuenta de Azure utilizando el comando "az login" y siguiendo las instrucciones en la terminal [https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container]
+
+2. Crea un registro de contenedor
+  - Necesitarás un registro de contenedor donde almacenarás la imagen de tu contenedor. Puedes crear un Azure Container Registry utilizando el comando "az acr create" [https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container]
+  
+  CODIGO: az acr create --name <registry-name> --resource-group <resource-group-name> --sku Basic --admin-enabled true
+
+  - Reemplaza <registry-name> con un nombre único para tu registro y <resource-group-name> con el nombre del grupo de recursos en el que quieres crear el registro.
+
+3. Construye y sube tu imagen de contenedor
+  - Ahora, debes construir tu imagen de contenedor y subirla a tu registro recién creado. Puedes hacer esto utilizando los comandos "docker build" y "docker push" [https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container]
+
+  CODIGO: docker build -t <registry-name>.azurecr.io/backend:latest .
+  az acr login --name <registry-name>
+  docker push <registry-name>.azurecr.io/backend:latest
+
+  - Asegúrate de reemplazar <registry-name> con el nombre de tu registro.
+
+4. Crea tu App Service
+  - Ahora puedes crear tu App Service utilizando el comando "az webapp create". Necesitarás especificar el nombre de tu App Service, el nombre de tu plan de servicio de aplicación, y el nombre de tu imagen de contenedor [https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container]
+
+  CODIGO: az webapp create -g <resource-group-name> -p <app-service-plan-name> -n <app-service-name> -i <registry-name>.azurecr.io/backend:latest
+
+  - Asegúrate de reemplazar <resource-group-name>, <app-service-plan-name>, <app-service-name>, y <registry-name> con los nombres apropiados.
+
+5. Configura las variables de entorno del contenedor
+  - Si tu contenedor necesita variables de entorno, puedes configurarlas utilizando el comando az webapp config appsettings set [https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container]
+  
+  CODIGO: az webapp config appsettings set -g <resource-group-name> -n <app-service-name> --settings PORT=8000
+
+  - Este comando configurará la variable de entorno "PORT"para que tu aplicación sepa en qué puerto debe escuchar.
+
+6. Navega a tu aplicación
+  - Una vez que tu aplicación está desplegada, puedes navegar a ella en tu navegador web en la URL http://<app-service-name>.azurewebsites.net [https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container]
+
+  Estos pasos deberían ayudarte a desplegar tu backend en un contenedor en una App Service de Azure. Si tu aplicación no se está ejecutando correctamente, puedes utilizar los comandos az webapp log config y az webapp log tail para habilitar y ver los logs de tu aplicación [https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container]

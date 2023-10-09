@@ -12,11 +12,14 @@ class State(rx.State):
 def index() -> rx.Component:
   return Base(
     rx.vstack(
+      # parte de la fotos y texto a la derecha
       rx.hstack(
+        # foto perfil
         rx.image(
-          src="https://djangoyoiner.blob.core.windows.net/portafolio/static/portfolio/perfil.jpg",
+          src="foto-mejor-porta-2.png",
           style=style.s_img_border
         ),
+        # parte del texto, dentro de un stack vertical
         rx.vstack(
           rx.heading(
             "Hola, me llamo Yoiner",
@@ -39,7 +42,7 @@ def index() -> rx.Component:
             style=dict(marginRight="auto")
             )
         )
-      ),
+      )
     )
   )
 

@@ -14,5 +14,5 @@ def NavBar():
       href="#",
       style=style.s_nav_item_notas
     ),
-    style=style.def_s_width(100)
+    style=style.s_navbar
   )
